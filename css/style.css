@@ -33,6 +33,7 @@ h2
 }
 #containerCrud
 {
+    margin-top: 2%;
     align-items: center;
     min-height: 500px;
     background-color: rgb(247, 244, 244);

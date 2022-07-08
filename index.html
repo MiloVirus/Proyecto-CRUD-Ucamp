@@ -23,11 +23,11 @@
     <div class="container" id="formContainer">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Player Name</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Input your gamertag">
+            <input id="playerName" name="playerName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Input your gamertag">
         </div>
         <div class="mb-3">
             <label for="exampleDataList" class="form-label">Game</label>
-            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Choose your game">
+            <input id="gameName" name="gameName" class="form-control" list="datalistOptions" placeholder="Choose your game">
                 <datalist id="datalistOptions">
                 <option value="League of Legends">
                 <option value="World of Warcraft">
@@ -36,7 +36,9 @@
                 <option value="Teamfight Tactics">
                 </datalist>
         </div>
-   
+        <button onclick="submitData()" type="button" class="btn btn-primary">Primary</button>
+
+        
     </div>
     <div class="container" id="containerCrud">
         <div class="row" id="upperBarCrud">
@@ -55,17 +57,17 @@
         </div>
 
         <div class="row" id="dataCrud">
-            <div class="col">
-              <h6></h6>
+            <div id="playerNameData" class="col">
+              <h6 ></h6>
             </div>
-            <div class="col">
-              <h6></h6>
+            <div id="playerIdData" class="col">
+              <h6 ></h6>
             </div>
-            <div class="col">
-              <h6></h6>
+            <div id="gameNameData" class="col">
+              <h6 ></h6>
             </div>
-            <div class="col">
-              <h6></h6>
+            <div id="statusData" class="col">
+              <h6 ></h6>
             </div>
           </div>
       </div>
