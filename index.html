@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/bootstrap-min.css">
     <link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
+<body onload="onLoad()">
     <header>
         <nav class="navbar">
             <div class="container" id="containerMain">
@@ -21,22 +21,25 @@
     </header>
     <h2>Project CRUD</h2>
     <div class="container" id="formContainer">
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Player Name</label>
-            <input id="playerName" name="playerName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Input your gamertag">
-        </div>
-        <div class="mb-3">
-            <label for="exampleDataList" class="form-label">Game</label>
-            <input id="gameName" name="gameName" class="form-control" list="datalistOptions" placeholder="Choose your game">
-                <datalist id="datalistOptions">
-                <option value="League of Legends">
-                <option value="World of Warcraft">
-                <option value="Rocket League">
-                <option value="Call of duty: Warzone">
-                <option value="Teamfight Tactics">
-                </datalist>
-        </div>
-        <button onclick="submitData()" type="button" class="btn btn-primary">Primary</button>
+        <form id="my_form" action="">
+                <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Player Name</label>
+                <input id="playerName" name="playerName" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Input your gamertag">
+            </div>
+            <div class="mb-3">
+                <label for="exampleDataList" class="form-label">Game</label>
+                <input id="gameName" name="gameName" class="form-control" list="datalistOptions" placeholder="Choose your game">
+                    <datalist id="datalistOptions">
+                    <option value="League of Legends">
+                    <option value="World of Warcraft">
+                    <option value="Rocket League">
+                    <option value="Call of duty: Warzone">
+                    <option value="Teamfight Tactics">
+                    </datalist>
+            </div>
+            <button id="btn" onclick="submitData()" type="submit" class="btn btn-primary">Primary</button>
+        </form>
+       
 
         
     </div>
