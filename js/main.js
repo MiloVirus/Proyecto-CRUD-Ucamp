@@ -1,8 +1,9 @@
 
 class Player
 {
-    constructor(playerName, game)
+    constructor(index, playerName, game)
     {
+        this.playerIndex = index
         this.playerName = playerName
         this.playerId = this.generateId()
         this.game = game
@@ -29,8 +30,18 @@ class Player
         return status
     }
     delete()
-    {
+    {   
+        console.log(this.playerIndex)
+        for( var i = 0; i < myPlayers.length; i++){ 
+            console.log(myPlayers[i].playerIndex)
+            if ( myPlayers[i].playerIndex === this.playerIndex) { 
 
+                myPlayers.splice(i , 1)
+        
+            }
+        
+        }
+        console.log(myPlayers)
     }
     edit()
     {
@@ -56,8 +67,6 @@ const myPlayers = [
 let count = 0;
 const submitData = () =>
 {
-   
-
     console.log("Pressed")
     let playerName = document.getElementById("playerName")
     let gameName = document.getElementById("gameName")
@@ -65,7 +74,7 @@ const submitData = () =>
     let player_name = playerName.value
     let game_name = gameName.value
 
-    let player = new Player(player_name, game_name)
+    let player = new Player(count, player_name, game_name)
     myPlayers.push(player)
 
     window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))
@@ -113,6 +122,12 @@ const submitData = () =>
     const btnEliminate = document.createElement("button");
     btnEliminate.innerHTML = "Eliminate";
     btnEliminate.classList.add("btn")
+
+    btnEliminate.onclick = function deletePlayer()
+    {
+        player.delete()
+    }
+
     nodeButtonEliminate.classList.add("col")
     nodeButtonEliminate.appendChild(btnEliminate)
     container.appendChild(nodeButtonEliminate);

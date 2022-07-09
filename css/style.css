@@ -51,6 +51,11 @@ h2
     color: white;
     padding: 1%;
     align-items: center;
+    padding: 2%;
+}
+#dataCrud
+{
+    background-color: rgb(247, 244, 244);
 }
 .row
 {
