@@ -1,96 +1,10 @@
-class Player
-{
-    constructor(index, playerName, game)
-    {
-        this.playerIndex = index
-        this.playerName = playerName
-        this.playerId = this.generateId()
-        this.game = game
-        this.status = this.setStatus()
-    }
-    generateId()
-    {
-        let playerId = Math.floor(Math.random() * 100)
-        return playerId
-    }
-    setStatus()
-    {
-        let status = "active"
-        if (status == "active")
-            {
-                document.getElementById("statusData").style.color="green";
-            }
-            else
-            {
-                document.getElementById("statusData").style.color="red";
-            }
-        
+/*
 
-        return status
-    }
-    delete()
-    {   
-        console.log(this.playerIndex)
-        
-        for( var i = 0; i < myPlayers.length; i++){ 
-            console.log(myPlayers[i].playerIndex)
-            if (myPlayers[i].playerIndex === this.playerIndex) { 
-
-                myPlayers.splice(i , 1)
-                var row = document.getElementById("containerDataCrud"+this.playerIndex);
-                row.parentNode.removeChild(row);
-        
-            }
-        
-        }
-        window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))
-        console.log(myPlayers)
-        
-    }
-    edit()
-    {
-        console.log("Click Edit")
-        for( var i = 0; i < myPlayers.length; i++){ 
-            
-            if (myPlayers[i].playerIndex === this.playerIndex) { 
-
-                let playerName = document.getElementById("playerName")
-                let gameName = document.getElementById("gameName")
-
-                myPlayers[i].playerName = playerName.value
-                myPlayers[i].gameName = gameName.value
-        
-            }
-        }
-        window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))
-
-    }
-}
-
-const myPlayers = [
-    
-    
-]
-
-let count = 0;
-
-const submitData = (playerName, gameName) =>
-{
-    
-    playerName = document.getElementById("playerName")
-    gameName = document.getElementById("gameName")
-
-    let player = new Player(count, playerName.value, gameName.value)
-    myPlayers.push(player)
-    
-    console.log(myPlayers)
     window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))
-
     JSON.parse(window.localStorage.getItem('myplayers') || "[]" );
-    
+
     const container = document.createElement('div')
     container.classList.add("row")
-    container.setAttribute('id', 'containerDataCrud'+ count);
     document.getElementById("containerCrud").appendChild(container)
     
    //Create Player Name Node
@@ -148,12 +62,6 @@ const submitData = (playerName, gameName) =>
     btnEdit.innerHTML = "Edit";
     nodeButtonEdit.classList.add("col")
     btnEdit.classList.add("btn")
-
-    btnEdit.onclick = function editPlayer()
-    {
-        player.edit()
-        
-    }
     nodeButtonEdit.appendChild(btnEdit)
     container.appendChild(nodeButtonEdit);
         
@@ -169,7 +77,77 @@ const submitData = (playerName, gameName) =>
     count++
 }
 
+function onLoad()
+{
+    let local = JSON.parse(window.localStorage.getItem('myplayers'))
+
+   
+
+    if (local != null)
+    {   
+        for (let i = 0; i < local.length ; i++)
+        {
+            if (local[i].status == "active")
+            {
+                document.getElementById("statusData").style.color="green";
+            }
+            else
+            {
+                document.getElementById("statusData").style.color="red";
+            }
+        // Creates player Name Node
+
+        const nodePlayerName = document.createElement('div');
+        let playerNameLocale = JSON.parse(window.localStorage.getItem('myplayers'))
+
+        const textnodePlayerName = document.createTextNode(playerNameLocale[i].playerName)
+        nodePlayerName.appendChild(textnodePlayerName)
+        document.getElementById("playerNameData").appendChild(nodePlayerName)
+
+        // Creates player ID Node
+
+        const nodePlayerId = document.createElement('div');
+        let str = playerNameLocale[i].playerId.toString()
+        const textnodePlayerId = document.createTextNode(str)
+        nodePlayerId.appendChild(textnodePlayerId)
+        document.getElementById("playerIdData").appendChild(nodePlayerId)
+
+        // Creates game Name Node
+        const nodeGame = document.createElement('div');
+        const textnodeGame = document.createTextNode(playerNameLocale[i].game)
+        nodeGame.appendChild(textnodeGame)
+        document.getElementById("gameNameData").appendChild(nodeGame)
+
+        // Creates status Node
+
+        const nodeStatus = document.createElement('div');
+        const textnodeStatus = document.createTextNode(playerNameLocale[i].status)
+        nodeStatus.appendChild(textnodeStatus)
+        document.getElementById("statusData").appendChild(nodeStatus)
+        
+        //Create Eliminate Button
+
+        const btnEliminate = document.createElement("button");
+        btnEliminate.classList.add("btn")
+        btnEliminate.innerHTML = "Eliminate";
+        document.getElementById("eliminateData").appendChild(btnEliminate);
 
 
+        //Create Edit Button
 
+        const btnEdit = document.createElement("button");
+        btnEdit.classList.add("btn")
+        btnEdit.innerHTML = "Edit";
+        document.getElementById("editData").appendChild(btnEdit);
+        
+
+        }
+    }
+    else 
+    {
+        console.log("Local has no values")
+    }
+    
+}
+*/
 
