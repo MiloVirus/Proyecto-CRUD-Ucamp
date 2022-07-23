@@ -67,3 +67,8 @@ h2
     align-items: center;
     justify-content: center;
 }
+.col h5 a:hover
+{
+    color: rgb(2, 119, 252);
+    cursor: pointer;
+}

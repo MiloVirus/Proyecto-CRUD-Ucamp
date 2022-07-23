@@ -35,7 +35,6 @@ class Player
             }  
         }
         window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))
-        JSON.parse(window.localStorage.getItem('myplayers'));
         retrieveData()
     }
     
@@ -114,7 +113,7 @@ const retrieveData = () =>
 
     
             const container = document.createElement('div')
-            container.classList.add("row")
+            container.classList.add("row", "p-3")
             container.setAttribute('id', 'containerDataCrud'+ index);
             document.getElementById("containerCrud").appendChild(container)
             
@@ -149,12 +148,13 @@ const retrieveData = () =>
             if(playerNameLocale[index].status == "active")
             {
                 btnStatus.classList.add("btn","btn-success")
+                
             }
             else{
                 btnStatus.classList.add("btn","btn-danger")
+                container.classList.add("text-bg-secondary", "p-3")
             }
             
-            btnStatus.setAttribute('id', 'buttonStatus'+index);
 
             btnStatus.onclick = function statusPlayer()
             {   
@@ -208,9 +208,70 @@ const retrieveData = () =>
             });
         })
 }
+const compareName = (a, b) =>
+{
     
+    if (a.playerName.toLowerCase() < b.playerName.toLowerCase()) 
+    {
+        return -1
+    }
+    if (a.playerName.toLowerCase() > b.playerName.toLowerCase()) 
+    {
+        return 1
+    }
+    
+    return 0
+    
+}
+const compareStatus = (a, b) =>
+{
+    
+    if (a.status.toLowerCase() < b.status.toLowerCase()) 
+    {
+        return -1
+    }
+    if (a.status.toLowerCase() > b.status.toLowerCase()) 
+    {
+        return 1
+    }
+    
+    return 0
+    
+}
 
+const sortData = () =>
+{   
+    console.log("sorting Name")
+    let myPlayersArray = JSON.parse(window.localStorage.getItem('myplayers'));
+    if (myPlayersArray == null)
+    {
 
+    }
+    else{
+        myPlayersArray.sort(compareName)
+        console.log(myPlayersArray)
+        window.localStorage.setItem('myplayers', JSON.stringify(myPlayersArray))
+        retrieveData()
+    }
+    
+}
+
+const sortDataStatus = () =>
+{
+    console.log("Sorting Status")
+    let myPlayersArray = JSON.parse(window.localStorage.getItem('myplayers'));
+    if (myPlayersArray == null)
+    {
+
+    }
+    else{
+        myPlayersArray.sort(compareStatus)
+        console.log(myPlayersArray)
+        window.localStorage.setItem('myplayers', JSON.stringify(myPlayersArray))
+        retrieveData()
+    }
+    
+}
 
 
 
