@@ -1,122 +1,124 @@
 class Player
 {
-    constructor(index, playerName, game)
+    constructor(index, playerName, playerId, game, status)
     {
         this.playerIndex = index
         this.playerName = playerName
-        this.playerId = this.generateId()
+        this.playerId = playerId
         this.game = game
-        this.status = this.setStatus()
-
+        this.status = status
     }
-    generateId()
+    
+    changeStatus()
     {
-        let playerId = Math.floor(Math.random() * 100)
-        return playerId
-    }
-    setStatus()
-    {
-        let status = "active"
-        if (status == "active")
-            {
-                document.getElementById("statusData").style.color="green";
-            }
-            else
-            {
-                document.getElementById("statusData").style.color="red";
-            }
-        
+        if(this.status === "active")
+        {
+            for( var i = 0; i < myPlayers.length; i++){ 
 
-        return status
+    
+                if (myPlayers[i].playerIndex === this.playerIndex) { 
+    
+                   myPlayers[i].status = "inactive"    
+                }
+            }   
+        }
+        if(this.status === "inactive")
+        {
+            for( var i = 0; i < myPlayers.length; i++){ 
+
+    
+                if (myPlayers[i].playerIndex === this.playerIndex) { 
+                    
+                    myPlayers[i].status = "active"
+                  
+                }
+            }  
+        }
+        window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))
+        JSON.parse(window.localStorage.getItem('myplayers'));
+        retrieveData()
     }
+    
     delete()
     {   
-        console.log(this.playerIndex)
-        
         for( var i = 0; i < myPlayers.length; i++){ 
-            console.log(myPlayers[i].playerIndex)
+
+
             if (myPlayers[i].playerIndex === this.playerIndex) { 
 
                 myPlayers.splice(i , 1)
                 var row = document.getElementById("containerDataCrud"+this.playerIndex);
                 row.parentNode.removeChild(row);
-        
             }
-        
         }
-        window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))
-        console.log(myPlayers)
-        
+        window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))  
     }
+
     edit()
     {
-        console.log("Click Edit")
+
         for( var i = 0; i < myPlayers.length; i++){ 
             
             if (myPlayers[i].playerIndex === this.playerIndex) { 
 
                 let playerName = document.getElementById("playerName")
                 let gameName = document.getElementById("gameName")
+               
 
                 myPlayers[i].playerName = playerName.value
-                myPlayers[i].gameName = gameName.value
+                myPlayers[i].game = gameName.value 
+
             }
         }
-        
         window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))
-        let playerNameLocale = JSON.parse(window.localStorage.getItem('myplayers'));
-
-        console.log(myPlayers)
-        console.log(playerNameLocale)    
+        JSON.parse(window.localStorage.getItem('myplayers'));   
         retrieveData()
     }
 }
 
-const myPlayers = [
-    
-    
-]
+const myPlayers = []
 
 let count = 0;
 
 const submitData = (playerName, gameName) =>
 {
-    
     playerName = document.getElementById("playerName")
     gameName = document.getElementById("gameName")
 
-    let player = new Player(count, playerName.value, gameName.value)
+    let player = new Player(count, playerName.value, Math.floor(Math.random() * 100),gameName.value, "active")
 
     myPlayers.push(player)
-    console.log(myPlayers)
     window.localStorage.setItem('myplayers', JSON.stringify(myPlayers))
     retrieveData()
+    count++
 }
 
 const retrieveData = () =>
 {
     let playerNameLocale =  JSON.parse(window.localStorage.getItem('myplayers'));
+
     playerNameLocale.forEach((element, index) => {
 
-            let player = new Player(playerNameLocale[index].playerIndex, playerNameLocale[index].playerName, playerNameLocale[index].playerId, playerNameLocale[index].game, playerNameLocale[index].status)
-            if(document.getElementById('containerDataCrud'+index) == null)
+            
+            if(document.getElementById('containerDataCrud'+ index) == null)
             {
-                console.log("it's null")
+                
             }
             else
             {
                 const elementEdit = document.getElementById('containerDataCrud'+ index)
-                //console.log(elementEdit)
                 elementEdit.remove()
             }
             
+            let player = new Player(playerNameLocale[index].playerIndex, playerNameLocale[index].playerName, playerNameLocale[index].playerId, playerNameLocale[index].game, playerNameLocale[index].status)
+
     
             const container = document.createElement('div')
             container.classList.add("row")
             container.setAttribute('id', 'containerDataCrud'+ index);
             document.getElementById("containerCrud").appendChild(container)
             
-        //Create Player Name Node
+            //Create Player Name Node
 
             const nodePlayerName = document.createElement('div');
             nodePlayerName.classList.add("col")
@@ -128,8 +130,7 @@ const retrieveData = () =>
 
             const nodePlayerId = document.createElement('div');
             nodePlayerId.classList.add("col")
-            let str = playerNameLocale[index].playerId.toString()
-            const textnodePlayerId = document.createTextNode(str)
+            const textnodePlayerId= document.createTextNode(playerNameLocale[index].playerId)
             nodePlayerId.appendChild(textnodePlayerId)
             container.appendChild(nodePlayerId)
 
@@ -144,13 +145,21 @@ const retrieveData = () =>
 
             const nodeButtonStatus = document.createElement('div');
             const btnStatus = document.createElement("button");
-            const textnodeStatus = document.createTextNode(playerNameLocale[index].status)
-            btnStatus.innerHTML = textnodeStatus
-            btnStatus.classList.add("btn","btn-success")
-
-            btnStatus.onclick = function deletePlayer()
+            btnStatus.innerHTML = playerNameLocale[index].status
+            if(playerNameLocale[index].status == "active")
             {
+                btnStatus.classList.add("btn","btn-success")
+            }
+            else{
+                btnStatus.classList.add("btn","btn-danger")
+            }
+            
+            btnStatus.setAttribute('id', 'buttonStatus'+index);
 
+            btnStatus.onclick = function statusPlayer()
+            {   
+                
+                player.changeStatus()
             }
 
             nodeButtonStatus.classList.add("col")
@@ -161,7 +170,7 @@ const retrieveData = () =>
             const nodeButtonEliminate = document.createElement('div');
             const btnEliminate = document.createElement("button");
             btnEliminate.innerHTML = "Eliminate";
-            btnEliminate.classList.add("btn")
+            btnEliminate.classList.add("btn", "btn-class")
 
             btnEliminate.onclick = function deletePlayer()
             {
@@ -179,7 +188,7 @@ const retrieveData = () =>
             const btnEdit = document.createElement("button");
             btnEdit.innerHTML = "Edit";
             nodeButtonEdit.classList.add("col")
-            btnEdit.classList.add("btn")
+            btnEdit.classList.add("btn", "btn-class")
 
             btnEdit.onclick = function editPlayer()
             {
@@ -197,8 +206,6 @@ const retrieveData = () =>
 
             form.reset();
             });
-
-            
         })
 }
     
